@@ -68,7 +68,7 @@ public class Deep_main extends ApplicationAdapter {
         sky.revolve();
 		sun.shine();
         for(Planet planet : planets) planet.revolve();
-	}
+    }
 	
 	@Override
 	public void dispose () {

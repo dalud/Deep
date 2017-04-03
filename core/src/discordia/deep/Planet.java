@@ -20,16 +20,16 @@ public class Planet {
     ModelInstance planetI;
     Material planetMat;
     float speed;
-    Vector3 direction;
+    Vector3 position;
 
     public Planet(ModelBuilder modelBuilder, float size, Color color, Vector3 position){
         planetMat = new Material();
         planetMat.set(new ColorAttribute(ColorAttribute.Diffuse, color));
         planetM = modelBuilder.createSphere(size, size, size, 100, 100, planetMat, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
         planetI = new ModelInstance(planetM);
+        this.position = position;
         planetI.transform.setToTranslation(position);
-        speed = .05f/position.len();
-        direction = new Vector3();
+        speed = 1/position.len();
     }
 
     public void render(ModelBatch batch, Environment environment) {
@@ -37,9 +37,8 @@ public class Planet {
     }
 
     public void revolve() {
-        planetI.transform.getTranslation(direction);
-        direction.setLength(speed);
-        direction.rotate(90, 0,1,0);
-        planetI.transform.translate(direction);
+        planetI.transform.getTranslation(position);
+        position.rotate(speed, 0,1,0);
+        planetI.transform.setToTranslation(position);
     }
 }
