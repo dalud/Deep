@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 
 /**
- * Created by Dalud on 2.4.2017.
+ * Created by dalud on 2.4.2017.
  */
 
 public class Sun {

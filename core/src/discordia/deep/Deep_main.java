@@ -2,6 +2,8 @@ package discordia.deep;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.loaders.ModelLoader;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,10 +14,10 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.UBJsonReader;
-
 
 public class Deep_main extends ApplicationAdapter {
 	ModelBatch batch;
@@ -26,6 +28,9 @@ public class Deep_main extends ApplicationAdapter {
 	Environment environment;
 	PointLight sunL;
 	PerspectiveCamera cam;
+    InputHandler input;
+    InputProcessor ext;
+    InputMultiplexer inputs;
 	
 	@Override
 	public void create () {
@@ -40,16 +45,21 @@ public class Deep_main extends ApplicationAdapter {
         planets.add(new Planet(modelBuilder, .6f, Color.CHARTREUSE, new Vector3(-2.5f, 0, -2.5f)));
 
 		environment = new Environment();
-		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, .21f, .21f, .21f, 1));
+		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, .18f, .18f, .18f, 1));
 		sunL = new PointLight();
 		sunL.set(Color.WHITE, 0,0,0, 15);
 		environment.add(sunL);
 
 		cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); //VIEWPORT WIDTH/HEIGHT ?
-		cam.position.set(0, 4.5f, 10);
+		cam.position.set(0, 4.5f, 15);
 		cam.far = 5000;
 		cam.lookAt(0, -1, 0);
 		cam.update();
+
+        input = new InputHandler(cam);
+        ext = new GestureDetector(new InputHandlerExtended(input));
+        inputs = new InputMultiplexer(input, ext);
+        Gdx.input.setInputProcessor(inputs);
 	}
 
 	@Override
@@ -57,17 +67,18 @@ public class Deep_main extends ApplicationAdapter {
 		Gdx.gl.glClearColor(.1f, .1f, .1f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-		cam.update();
+        input.poll();
+        cam.update();
+
+        sky.revolve();
+        sun.shine();
+        for(Planet planet : planets) planet.revolve();
 
 		batch.begin(cam);
 		sky.render(batch);
 		sun.render(batch);
         for(Planet planet : planets) planet.render(batch, environment);
 		batch.end();
-
-        sky.revolve();
-		sun.shine();
-        for(Planet planet : planets) planet.revolve();
     }
 	
 	@Override

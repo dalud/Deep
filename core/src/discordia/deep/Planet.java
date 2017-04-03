@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 
 /**
- * Created by Dalud on 2.4.2017.
+ * Created by dalud on 2.4.2017.
  */
 
 public class Planet {

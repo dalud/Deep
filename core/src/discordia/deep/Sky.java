@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 
 /**
- * Created by Dalud on 2.4.2017.
+ * Created by dalud on 2.4.2017.
  */
 
 public class Sky {
@@ -17,7 +17,7 @@ public class Sky {
     public Sky(ModelLoader g3dLoader){
         sky = g3dLoader.loadModel(Gdx.files.internal("sky/sky.g3db"));
         skyI = new ModelInstance(sky);
-        float scale = .08f;
+        float scale = .2f;
         skyI.nodes.get(0).scale.set(scale, scale, scale);
         skyI.calculateTransforms();
     }
