@@ -25,10 +25,10 @@ public class InputHandler implements InputProcessor {
     public void poll(){
         switch (keycode){
             case Input.Keys.DOWN:
-                panDown(.1f);
+                tilt(.1f);
                 break;
             case Input.Keys.UP:
-                panUp(.1f);
+                tilt(-.1f);
                 break;
             case Input.Keys.SPACE:
                 zoom(-.1f);
@@ -53,11 +53,7 @@ public class InputHandler implements InputProcessor {
         distance += delta;
     }
 
-    private void panUp(float delta) {
-        position.add(0, -delta, 0);
-    }
-
-    private void panDown(float delta) {
+    public void tilt(float delta){
         position.add(0, delta, 0);
     }
 
@@ -69,9 +65,7 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        if(screenY < initY) panUp((float)(initY-screenY) / 30);
-        if(screenY > initY) panDown((float)(screenY-initY) / 30);
-        initY = screenY;
+        tilt((float)(screenY-initY) / 1000);
         return false;
     }
 
