@@ -14,7 +14,7 @@ public class InputHandler implements InputProcessor {
     int keycode;
     Vector3 position;
     float distance;
-    int initY;
+    int initY, finger;
 
     public InputHandler(PerspectiveCamera cam){
         this.cam = cam;
@@ -60,12 +60,16 @@ public class InputHandler implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         initY = screenY;
+        finger = pointer;
         return false;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        tilt((float)(screenY-initY) / 1000);
+        if(pointer == finger){
+            tilt((float)(screenY-initY) / 30);
+            initY = screenY;
+        }
         return false;
     }
 
