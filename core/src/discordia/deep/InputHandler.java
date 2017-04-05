@@ -65,7 +65,8 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        tilt((float)(screenY-initY) / 1000);
+        tilt((float)(screenY-initY) / 30);
+        initY = screenY;
         return false;
     }
 
