@@ -102,6 +102,7 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean scrolled(int amount) {
+        zoom(amount);
         return false;
     }
 }
