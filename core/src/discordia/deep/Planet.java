@@ -25,7 +25,7 @@ public class Planet {
     public Planet(ModelBuilder modelBuilder, float size, Color color, Vector3 position){
         planetMat = new Material();
         planetMat.set(new ColorAttribute(ColorAttribute.Diffuse, color));
-        planetM = modelBuilder.createSphere(size, size, size, 100, 100, planetMat, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+        planetM = modelBuilder.createSphere(size, size, size, 30, 30, planetMat, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
         planetI = new ModelInstance(planetM);
         this.position = position;
         planetI.transform.setToTranslation(position);
@@ -37,7 +37,6 @@ public class Planet {
     }
 
     public void revolve() {
-        planetI.transform.getTranslation(position);
         position.rotate(speed, 0,1,0);
         planetI.transform.setToTranslation(position);
     }

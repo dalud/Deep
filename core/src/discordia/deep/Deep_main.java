@@ -25,6 +25,7 @@ public class Deep_main extends ApplicationAdapter {
 	Sky sky;
 	Sun sun;
     Array<Planet> planets;
+    Station station;
 	Environment environment;
 	PointLight sunL;
 	PerspectiveCamera cam;
@@ -40,12 +41,14 @@ public class Deep_main extends ApplicationAdapter {
 		sun = new Sun(modelBuilder);
         sky = new Sky(g3dLoader);
         planets = new Array<Planet>();
-        planets.add(new Planet(modelBuilder, 1, Color.PURPLE, new Vector3(2,0,0)));
+        planets.add(new Planet(modelBuilder, 1, Color.PURPLE, new Vector3(2 ,0, 0)));
         planets.add(new Planet(modelBuilder, 1.4f, Color.BROWN, new Vector3(3.5f, 0, 3.5f)));
         planets.add(new Planet(modelBuilder, .6f, Color.CHARTREUSE, new Vector3(-2.5f, 0, -2.5f)));
 
+        station = new Station(modelBuilder, .8f, Color.GRAY, new Vector3(-2.2f, 0, 2.2f));
+
 		environment = new Environment();
-		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, .18f, .18f, .18f, 1));
+		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, .15f, .15f, .15f, 1));
 		sunL = new PointLight();
 		sunL.set(Color.WHITE, 0,0,0, 15);
 		environment.add(sunL);
@@ -73,11 +76,13 @@ public class Deep_main extends ApplicationAdapter {
         sky.revolve();
         sun.shine();
         for(Planet planet : planets) planet.revolve();
+        station.revolve();
 
 		batch.begin(cam);
 		sky.render(batch);
 		sun.render(batch);
         for(Planet planet : planets) planet.render(batch, environment);
+        station.render(batch, environment);
 		batch.end();
     }
 	
